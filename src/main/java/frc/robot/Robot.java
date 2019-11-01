@@ -17,27 +17,38 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  * it contains the code necessary to operate a robot with tank drive.
  */
 public class Robot extends TimedRobot {
+
   private DifferentialDrive m_myRobot;
-  private Joystick m_leftStick;
-  private Joystick m_rightStick;
+  private WPI_TalonSRX mLeftMaster;
+  private WPI_TalonSRX mLeftSlave0;
+  private WPI_TalonSRX mRightMaster;
+  private WPI_TalonSRX mRightSlave0;
 
   @Override
   public void robotInit() {
-    WPI_TalonSRX mLeft_Master = new WPI_TalonSRX(30);
-    WPI_TalonSRX mLeftSlave = new WPI_TalonSRX(1);
-    WPI_TalonSRX mRightMaster = new WPI_TalonSRX(14);
-    WPI_TalonSRX mRightSlave = new WPI_TalonSRX(15);
-    
-    mLeftSlave.follow(mLeft_Master);
-    mRightSlave.follow(mRightMaster);
-    
-    m_myRobot = new DifferentialDrive(mLeft_Master, mRightMaster);
-    m_leftStick = new Joystick(0);
-    m_rightStick = new Joystick(1);
+    mLeftMaster = new WPI_TalonSRX(30);
+    mLeftSlave0 = new WPI_TalonSRX(1);
+    mRightMaster = new WPI_TalonSRX(14);
+    mRightSlave0 = new WPI_TalonSRX(15);
+
+    mLeftSlave0.follow(mLeftMaster);
+    mRightSlave0.follow(mRightMaster);
+
+    m_myRobot = new DifferentialDrive(mLeftMaster, mRightMaster);
   }
 
-  @Override
+  private double target;
+  private double currentPosition;
+
+  public void teleopInit() {
+    mLeftMaster.getSensorCollection().setQuadraturePosition(0, 10);
+    target = 4092 * 6 * Math.PI * 2; // 2 feet (theoretically)
+  }
+
   public void teleopPeriodic() {
-    m_myRobot.arcadeDrive(m_leftStick.getY(), m_leftStick.getX());
+    currentPosition = mLeftMaster.getSensorCollection().getQuadraturePosition();
+    if (target > currentPosition) {
+      m_myRobot.arcadeDrive(.5, 0);
+    }
   }
 }
