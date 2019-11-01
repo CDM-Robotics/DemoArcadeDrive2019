@@ -42,7 +42,7 @@ public class Robot extends TimedRobot {
 
   public void teleopInit() {
     mLeftMaster.getSensorCollection().setQuadraturePosition(0, 10);
-    target = 2 * (4092 / (6 * Math.PI)); // 2 feet (theoretically)
+    target = (2 * 12) * (4092 / (6 * Math.PI)); // 2 feet (theoretically)
   }
 
   public void teleopPeriodic() {
