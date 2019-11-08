@@ -23,6 +23,8 @@ public class Robot extends TimedRobot {
   private WPI_TalonSRX mLeftSlave0;
   private WPI_TalonSRX mRightMaster;
   private WPI_TalonSRX mRightSlave0;
+  private Joystick mLeftStick;
+  private Joystick mRightStick;
 
   @Override
   public void robotInit() {
@@ -34,21 +36,14 @@ public class Robot extends TimedRobot {
     mLeftSlave0.follow(mLeftMaster);
     mRightSlave0.follow(mRightMaster);
 
+    mLeftStick = new Joystick(0);
+    mRightStick = new Joystick(1);
+
     m_myRobot = new DifferentialDrive(mLeftMaster, mRightMaster);
   }
 
-  private double target;
-  private double currentPosition;
-
-  public void teleopInit() {
-    mLeftMaster.getSensorCollection().setQuadraturePosition(0, 10);
-    target = (2 * 12) * (4092 / (6 * Math.PI)); // 2 feet (theoretically)
-  }
 
   public void teleopPeriodic() {
-    currentPosition = mLeftMaster.getSensorCollection().getQuadraturePosition();
-    if (target > currentPosition) {
-      m_myRobot.arcadeDrive(.5, 0);
-    }
+    m_myRobot.arcadeDrive(mLeftStick.getY(), mLeftStick.getX());
   }
 }
