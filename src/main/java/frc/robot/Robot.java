@@ -39,11 +39,25 @@ public class Robot extends TimedRobot {
     mLeftStick = new Joystick(0);
     mRightStick = new Joystick(1);
 
+    mLeftMaster.getSensorCollection().setQuadraturePosition(0, 10);
+
     m_myRobot = new DifferentialDrive(mLeftMaster, mRightMaster);
   }
 
+  private int targetPosition;
+  private int currentPosition;
+
+  public void teleopInit(){
+    targetPosition = (int)((2 * 12) / (6 * Math.PI) * 4092);
+    currentPosition = mLeftMaster.getSensorCollection().getQuadraturePosition();
+  }
 
   public void teleopPeriodic() {
-    m_myRobot.arcadeDrive(mLeftStick.getY(), mLeftStick.getX());
+    currentPosition = mLeftMaster.getSensorCollection().getQuadraturePosition();
+    if (currentPosition < targetPosition){
+      m_myRobot.arcadeDrive(0.5, 0);
+    } else {
+      m_myRobot.arcadeDrive(0, 0);
+    }
   }
 }
