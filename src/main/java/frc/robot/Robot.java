@@ -29,7 +29,7 @@ public class Robot extends TimedRobot {
   }
 
   public void teleopInit() {
-    Scheduler.getInstance().enable();
+    Scheduler.getInstance().run();
   }
 
   public void teleopPeriodic() {
