@@ -19,7 +19,7 @@ public class DriveDistCmd extends Command{
     }
      
     public void initialize(){
-        mTargetDistanceInTicks = mDistanceInFeet * 4092 / (6 * Math.PI);
+        mTargetDistanceInTicks = (mDistanceInFeet * 12) * (4092 / (6 * Math.PI));
         if(mDriveSys.getCurrentPosition() < mTargetDistanceInTicks){
             mSpeed = Math.abs(mSpeed); // makes speed positive
         }else {
