@@ -1,8 +1,8 @@
-package frc.robot.commands;
+package team6072.robot2019.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.subsystems.DriveSys;
+import team6072.robot2019.subsystems.*;
 
 public class ArcadeDriveCmd extends Command{
 
@@ -22,7 +22,6 @@ public class ArcadeDriveCmd extends Command{
     public void execute(){
         double y = mStick.getY();
         double x = mStick.getX();
-        y = -y;
         x = x * .8;
         mDriveSys.arcadeDrive(y, x);
     }

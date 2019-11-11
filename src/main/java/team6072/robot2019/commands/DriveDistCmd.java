@@ -1,8 +1,8 @@
-package frc.robot.commands;
+package team6072.robot2019.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.subsystems.DriveSys;
+import team6072.robot2019.subsystems.DriveSys;
 
 public class DriveDistCmd extends Command{
 

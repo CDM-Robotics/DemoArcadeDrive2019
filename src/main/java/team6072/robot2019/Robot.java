@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot;
+package team6072.robot2019;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -13,7 +13,10 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import frc.robot.subsystems.DriveSys;
+import team6072.robot2019.logging.LogWrapper;
+import team6072.robot2019.subsystems.DriveSys;
+import team6072.robot2019.logging.LogWrapper.FileType;
+import team6072.robot2019.logging.LogWrapper.Permission;
 
 /**
  * This is a demo program showing the use of the RobotDrive class, specifically
@@ -21,17 +24,20 @@ import frc.robot.subsystems.DriveSys;
  */
 public class Robot extends TimedRobot {
 
+  private LogWrapper mLog;
 
   @Override
   public void robotInit() {
+    mLog = new LogWrapper(FileType.ROBOT, "Robot.java", Permission.ALL);
+    Scheduler.getInstance().removeAll();
     DriveSys.getInstance();
     ControlBoard.getInstance();
   }
 
   public void teleopInit() {
-    Scheduler.getInstance().run();
   }
 
   public void teleopPeriodic() {
+    Scheduler.getInstance().run();
   }
 }
